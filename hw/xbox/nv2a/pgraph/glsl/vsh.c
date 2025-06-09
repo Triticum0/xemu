@@ -91,7 +91,7 @@ MString *pgraph_gen_vsh_glsl(const ShaderState *state, bool prefix_outputs)
         // fractional part and to convert floating-point coordinates by
         // by truncating (not flooring).
         "vec2 roundScreenCoords(vec2 pos) {\n"
-        "  return trunc(pos * 16.0f) / 16.0f;\n"
+        "  return trunc(pos * 16.0f) / 16.0f - 0.004;\n"
         "}\n");
 
     pgraph_get_glsl_vtx_header(header, state->vulkan, state->smooth_shading,
