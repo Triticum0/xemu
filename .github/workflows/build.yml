@@ -62,21 +62,10 @@ jobs:
     strategy:
       matrix:
         include:
-        - configuration: Debug
-          build_param: --debug
-          artifact_name: xemu-win-x86_64-debug
+        - configuration: DebugRenderDoc
+          build_param:  --debug --enable-renderdoc
+          artifact_name: xemu-win-x86_64-debugrenderdoc
           arch: x86_64
-        - configuration: Release
-          build_param:
-          artifact_name: xemu-win-x86_64-release
-          arch: x86_64
-        - configuration: Debug
-          build_param: --debug
-          artifact_name: xemu-win-aarch64-debug
-          arch: aarch64
-        - configuration: Release
-          build_param:
-          artifact_name: xemu-win-aarch64-release
           arch: aarch64
     env:
       DOCKER_IMAGE_NAME: ghcr.io/xemu-project/xemu-win64-toolchain:sha-0d06ce8
