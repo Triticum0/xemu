@@ -51,7 +51,7 @@ jobs:
         ./scripts/archive-source.sh src.tar
         gzip -1 src.tar
     - name: Upload source package artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: src.tar.gz
         path: src.tar.gz
@@ -84,14 +84,14 @@ jobs:
 
     steps:
     - name: Download source package
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: src.tar.gz
     - name: Extract source package
       run: tar xf src.tar.gz
     - name: Initialize compiler cache
       id: cache
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v4
       with:
         path: /tmp/xemu-ccache
         key: cache-wincross-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.configuration }}-${{ github.sha }}
@@ -112,7 +112,7 @@ jobs:
           $DOCKER_IMAGE_NAME \
             bash -c "ccache -z;export CFLAGS=\"${CFLAGS} -DDEBUG_NV2A_GL=1 -DSTREAM_GL_DEBUG_MESSAGES=1\"; ./build.sh -p win64-cross ${{ matrix.build_param }} && ccache -s"
     - name: Upload build artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: ${{ matrix.artifact_name }}
         path: dist
@@ -141,7 +141,7 @@ jobs:
           arch: aarch64
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: ${{ matrix.artifact_name }}
         path: ${{ matrix.artifact_name }}
@@ -158,7 +158,7 @@ jobs:
         7z a -tzip ../dist/${{ matrix.artifact_name }}.zip * "-xr!*.pdb"
         7z a -tzip ../dist/${{ matrix.artifact_name }}-pdb.zip "-ir!*.pdb"
     - name: Upload build artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: ${{ matrix.artifact_name }}-pdb
         path: dist
@@ -197,13 +197,13 @@ jobs:
     steps:
     - name: Initialize compiler cache
       id: cache
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v4
       with:
         path: /tmp/xemu-ccache
         key: cache-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.configuration }}-${{ github.sha }}
         restore-keys: cache-${{ runner.os }}-${{ matrix.arch }}-${{ matrix.configuration }}-
     - name: Download source package
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: src.tar.gz
     - name: Extract source package
@@ -273,7 +273,7 @@ jobs:
       run: |
         tar -czvf ${{ matrix.artifact_filename }} --transform "s#^dist#xemu#" dist
     - name: Upload build artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: ${{ matrix.artifact_name }}
         path: ${{ matrix.artifact_filename }}
@@ -307,7 +307,7 @@ jobs:
           artifact_filename: xemu-macos-arm64-releaserenderdoc.zip
     steps:
     - name: Download source package
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: src.tar.gz
     - name: Extract source package
@@ -326,7 +326,7 @@ jobs:
         pip install pyyaml requests
     - name: Initialize compiler, library cache
       id: cache
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v4
       with:
         path: |
           xemu-ccache
@@ -347,7 +347,7 @@ jobs:
         zip -r ../${{ matrix.artifact_filename }} *
         popd
     - name: Upload build artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: ${{ matrix.artifact_name }}
         path: ${{ matrix.artifact_filename }}
@@ -361,12 +361,12 @@ jobs:
         configuration: ["debug", "release"]
     steps:
     - name: Download x86_64 build
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: xemu-macos-x86_64-${{ matrix.configuration }}renderdoc
         path: xemu-macos-x86_64-${{ matrix.configuration }}renderdoc
     - name: Download arm64 build
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: xemu-macos-arm64-${{ matrix.configuration }}renderdoc
         path: xemu-macos-arm64-${{ matrix.configuration }}renderdoc
@@ -390,7 +390,7 @@ jobs:
         zip -r ../xemu-macos-universal-${{ matrix.configuration }}renderdoc.zip *
         popd
     - name: Upload build artifact
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4
       with:
         name: xemu-macos-universal-${{ matrix.configuration }}renderdoc
         path: xemu-macos-universal-${{ matrix.configuration }}renderdoc.zip
@@ -401,7 +401,7 @@ jobs:
     needs: [Ubuntu, macOSUniversal, Windows, WindowsPdb]
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         path: dist
     - name: Extract source package
@@ -465,7 +465,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download source package
-      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v4
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v4
       with:
         name: src.tar.gz
     - name: Extract source package
